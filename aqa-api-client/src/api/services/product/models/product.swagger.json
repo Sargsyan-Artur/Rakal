@@ -1,0 +1,977 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "0.0.1",
+    "title": "Brands",
+    "description": "A set of API operations to manage Brands. Support all CRUD operations. Uses 'Soft Delete' concept. Deleted Brand is still accessible by Get Operation."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "paths": {
+    "/brands/{id}": {
+      "get": {
+        "tags": [
+          "brands-rest-controller"
+        ],
+        "summary": "Returns Brand object for the specified ID",
+        "operationId": "getById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Requested resource is not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AbstractThrowableProblem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "User doesn't have permissions to access this resource (even if resource does not exists)"
+          },
+          "200": {
+            "description": "Requested resource exists and user have enough permission to view it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BrandModel"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User is not authenticated and anonymous user cannot access this resource."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "brands-rest-controller"
+        ],
+        "summary": "Replaces the existing resource with the provided resource.",
+        "operationId": "update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BrandUpdateModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "404": {
+            "description": "Requested resource is not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AbstractThrowableProblem"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Indicates that existing resource was successfully replaced.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BrandModel"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "When Brand with the same name and Division already exists.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AbstractThrowableProblem"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Incorrect values were specified or not all required fields were set.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AbstractThrowableProblem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "User doesn't have enough permissions to create a new resource"
+          },
+          "401": {
+            "description": "User is not authenticated when anonymous user cannot create new resource"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "brands-rest-controller"
+        ],
+        "summary": "Deletes Brand with the specified ID. Returns 204 (NO CONTENT) even if requested resource was not found.",
+        "operationId": "delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "403": {
+            "description": "User doesn't have enough permissions to delete this resource"
+          },
+          "204": {
+            "description": "Indicates that specified resources no longer exists or was not found (not exists)."
+          },
+          "401": {
+            "description": "User is not authenticated and anonymous user cannot delete this resource"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "brands-rest-controller"
+        ],
+        "summary": "Partially updates the specified resource with provided values. If any provided value is 'null' or 'undefined' then the update of the corresponding field will be skipped. Returns same only those field which were passed.",
+        "operationId": "patch",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BrandPatchModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Indicates that existing resource was successfully replaced.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BrandPatchResponseModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Requested resource is not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AbstractThrowableProblem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "When Brand with the same name and Division already exists.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AbstractThrowableProblem"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Incorrect values were specified.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AbstractThrowableProblem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "User doesn't have enough permissions to create a new resource"
+          },
+          "401": {
+            "description": "User is not authenticated when anonymous user cannot create new resource"
+          }
+        }
+      }
+    },
+    "/brands": {
+      "get": {
+        "tags": [
+          "brands-rest-controller"
+        ],
+        "summary": "Returns paged list of all non-deleted Brands.",
+        "operationId": "findAll",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page of the results matching the query can be set using the page query parameter. The default value is 0, indicating that the initial page would be taken.",
+            "required": false,
+            "schema": {
+              "maximum": 2147483647,
+              "minimum": 0,
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of results to return from a query. Allowed is a value between 1 and 200. The default limit is 20",
+            "required": false,
+            "schema": {
+              "maximum": 200,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "divisionId",
+            "in": "query",
+            "description": "Allows to filter brands that belong to the specified Division",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Incorrect values were specified for paging of filtering parameters."
+          },
+          "200": {
+            "description": "Returns list of requested resourced that matches query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourcePagedResponseBrandModel"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "User doesn't have enough permissions to access this resource (even if resource does not exists)"
+          },
+          "401": {
+            "description": "User is not authenticated and anonymous user cannot access this resource."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "brands-rest-controller"
+        ],
+        "summary": "Creates new Brand and returns the newly created resource.",
+        "operationId": "create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BrandCreateModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Indicates that new resource was successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BrandModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Incorrect values were specified or not all required fields were set."
+          },
+          "404": {
+            "description": "Division for which need to create a new Brand is not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AbstractThrowableProblem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "When Brand with the same name and Division already exists.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AbstractThrowableProblem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "User doesn't have enough permissions to create a new resource"
+          },
+          "401": {
+            "description": "User is not authenticated when anonymous user cannot create new resource"
+          }
+        }
+      }
+    },
+    "/brands/exists": {
+      "get": {
+        "tags": [
+          "brands-rest-controller"
+        ],
+        "summary": "Checks if Brand with the specified name already exists for the concrete Division.",
+        "operationId": "exists",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "divisionId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "403": {
+            "description": "User doesn't have enough permissions to get resource for the specified division."
+          },
+          "200": {
+            "description": "Indicates that resource is exists for the specified parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User is not authenticated when anonymous user cannot create new resource"
+          },
+          "400": {
+            "description": "Incorrect values were specified."
+          }
+        },
+        "deprecated": true
+      },
+      "post": {
+        "tags": [
+          "brands-rest-controller"
+        ],
+        "summary": "Checks if Brand with the specified name already exists for the concrete Division.",
+        "operationId": "existsUsingPost",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CheckUniqueBrandNameModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "403": {
+            "description": "User doesn't have enough permissions to get resource for the specified division."
+          },
+          "200": {
+            "description": "Indicates that resource is exists for the specified parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User is not authenticated when anonymous user cannot create new resource"
+          },
+          "400": {
+            "description": "Incorrect values were specified."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BrandUpdateModel": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Brand's name. Unique per Division."
+          },
+          "position": {
+            "type": "integer",
+            "description": "Determines the order of brands according to their value/importance to merchants.",
+            "format": "int64"
+          }
+        },
+        "description": "Represents Brand Models parameters for Brand create or update operation."
+      },
+      "AbstractThrowableProblem": {
+        "type": "object",
+        "properties": {
+          "cause": {
+            "$ref": "#/components/schemas/ThrowableProblem"
+          },
+          "stackTrace": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "classLoaderName": {
+                  "type": "string"
+                },
+                "moduleName": {
+                  "type": "string"
+                },
+                "moduleVersion": {
+                  "type": "string"
+                },
+                "methodName": {
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                },
+                "lineNumber": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "className": {
+                  "type": "string"
+                },
+                "nativeMethod": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "type": {
+            "type": "string",
+            "format": "uri"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/StatusType"
+          },
+          "detail": {
+            "type": "string"
+          },
+          "instance": {
+            "type": "string",
+            "format": "uri"
+          },
+          "parameters": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object"
+            }
+          },
+          "message": {
+            "type": "string"
+          },
+          "suppressed": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "cause": {
+                  "type": "object",
+                  "properties": {
+                    "stackTrace": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "classLoaderName": {
+                            "type": "string"
+                          },
+                          "moduleName": {
+                            "type": "string"
+                          },
+                          "moduleVersion": {
+                            "type": "string"
+                          },
+                          "methodName": {
+                            "type": "string"
+                          },
+                          "fileName": {
+                            "type": "string"
+                          },
+                          "lineNumber": {
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "className": {
+                            "type": "string"
+                          },
+                          "nativeMethod": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "localizedMessage": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "stackTrace": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "classLoaderName": {
+                        "type": "string"
+                      },
+                      "moduleName": {
+                        "type": "string"
+                      },
+                      "moduleVersion": {
+                        "type": "string"
+                      },
+                      "methodName": {
+                        "type": "string"
+                      },
+                      "fileName": {
+                        "type": "string"
+                      },
+                      "lineNumber": {
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "className": {
+                        "type": "string"
+                      },
+                      "nativeMethod": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localizedMessage": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "localizedMessage": {
+            "type": "string"
+          }
+        }
+      },
+      "StatusType": {
+        "type": "object",
+        "properties": {
+          "reasonPhrase": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ThrowableProblem": {
+        "type": "object",
+        "properties": {
+          "cause": {
+            "$ref": "#/components/schemas/ThrowableProblem"
+          },
+          "stackTrace": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "classLoaderName": {
+                  "type": "string"
+                },
+                "moduleName": {
+                  "type": "string"
+                },
+                "moduleVersion": {
+                  "type": "string"
+                },
+                "methodName": {
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                },
+                "lineNumber": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "className": {
+                  "type": "string"
+                },
+                "nativeMethod": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/StatusType"
+          },
+          "title": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "string"
+          },
+          "instance": {
+            "type": "string",
+            "format": "uri"
+          },
+          "type": {
+            "type": "string",
+            "format": "uri"
+          },
+          "parameters": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object"
+            }
+          },
+          "suppressed": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "cause": {
+                  "type": "object",
+                  "properties": {
+                    "stackTrace": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "classLoaderName": {
+                            "type": "string"
+                          },
+                          "moduleName": {
+                            "type": "string"
+                          },
+                          "moduleVersion": {
+                            "type": "string"
+                          },
+                          "methodName": {
+                            "type": "string"
+                          },
+                          "fileName": {
+                            "type": "string"
+                          },
+                          "lineNumber": {
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "className": {
+                            "type": "string"
+                          },
+                          "nativeMethod": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "localizedMessage": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "stackTrace": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "classLoaderName": {
+                        "type": "string"
+                      },
+                      "moduleName": {
+                        "type": "string"
+                      },
+                      "moduleVersion": {
+                        "type": "string"
+                      },
+                      "methodName": {
+                        "type": "string"
+                      },
+                      "fileName": {
+                        "type": "string"
+                      },
+                      "lineNumber": {
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "className": {
+                        "type": "string"
+                      },
+                      "nativeMethod": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localizedMessage": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "localizedMessage": {
+            "type": "string"
+          }
+        }
+      },
+      "BrandModel": {
+        "required": [
+          "divisionId",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "An automatic generated universally unique identifier.",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "description": "Brand's name. Unique per division."
+          },
+          "divisionId": {
+            "type": "string",
+            "description": "Specifies which Division the Brand belongs to."
+          },
+          "position": {
+            "type": "integer",
+            "description": "Determines the order of Brands according to their value/importance to Division.",
+            "format": "int64"
+          }
+        },
+        "description": "Represents Brand model."
+      },
+      "BrandCreateModel": {
+        "required": [
+          "divisionId",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Brand's name. Unique per Division."
+          },
+          "divisionId": {
+            "type": "string",
+            "description": "Specifies which Division the Brand belongs to.",
+            "format": "uuid"
+          },
+          "position": {
+            "type": "integer",
+            "description": "Determines the order of brands according to their value/importance to merchants.",
+            "format": "int64"
+          }
+        },
+        "description": "Represents Brand Models parameters for Brand create or update operation."
+      },
+      "CheckUniqueBrandNameModel": {
+        "required": [
+          "divisionId",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Brand's name. Should be unique per Division."
+          },
+          "divisionId": {
+            "type": "string",
+            "description": "Specifies which Division the Brand belongs to.",
+            "format": "uuid"
+          }
+        },
+        "description": "A set of required parameters to check if the name already exists"
+      },
+      "BrandPatchModel": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Brand's name. Unique per Division.",
+            "nullable": true
+          },
+          "position": {
+            "type": "integer",
+            "description": "Determines the order of brands according to their value/importance to merchants.",
+            "format": "int64",
+            "nullable": true
+          }
+        },
+        "description": "Represents Brand Models parameters for Brand patch operation."
+      },
+      "BrandPatchResponseModel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Brand's name. Unique per Division."
+          },
+          "position": {
+            "type": "integer",
+            "description": "Determines the order of brands according to their value/importance to merchants.",
+            "format": "int64"
+          }
+        },
+        "description": "Represents response of PATCH operation."
+      },
+      "ResourcePagedResponseBrandModel": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "description": "The page supplied by the client or the server default.",
+            "format": "int32",
+            "readOnly": true
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Shows how many items the current page can contains.",
+            "format": "int32",
+            "readOnly": true
+          },
+          "count": {
+            "type": "integer",
+            "description": "The actual number of results returned in results.",
+            "format": "int32",
+            "readOnly": true
+          },
+          "total": {
+            "type": "integer",
+            "description": "The total number of results matching the query.",
+            "format": "int64",
+            "readOnly": true
+          },
+          "results": {
+            "type": "array",
+            "description": "List of results",
+            "readOnly": true,
+            "items": {
+              "$ref": "#/components/schemas/BrandModel"
+            }
+          },
+          "prevPage": {
+            "type": "string",
+            "description": "Generated link to the previous page. If the current page is the first - contains 'null'",
+            "nullable": true,
+            "readOnly": true
+          },
+          "nextPage": {
+            "type": "string",
+            "description": "Generated link to the next page. If the current page is the last one - contains 'null'",
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "description": "For query responses of requests supporting paging via limit and page."
+      }
+    }
+  }
+}

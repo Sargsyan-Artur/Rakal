@@ -1,0 +1,13 @@
+{
+  "id": "/MockSchema",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "name"
+  ]
+}

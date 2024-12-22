@@ -1,0 +1,744 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "0.0.1",
+    "title": "Catalogs",
+    "description": "A set of API operations to manage Catalogs"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8081",
+      "description": "Generated server url"
+    }
+  ],
+  "paths": {
+    "/catalogs/{merchantId}": {
+      "get": {
+        "tags": [
+          "catalogs-rest-controller"
+        ],
+        "summary": "Returns paged list of all Catalogs.",
+        "operationId": "findAll",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page into the results matching the query can be set using the page query parameter. The default value is 0, indicating that no results should be skipped.",
+            "required": false,
+            "schema": {
+              "maximum": 2147483647,
+              "minimum": 0,
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of results to return from a query. Allowed is a value between 1 and 200. The default limit is 20",
+            "required": false,
+            "schema": {
+              "maximum": 200,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "merchantId",
+            "in": "path",
+            "description": "Allows to filter categories that belong to the specified Merchant",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns catalog for the specified merchant",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResourcePagedResponseCatalogModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "If the specified division is not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AbstractThrowableProblem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User is not authenticated"
+          },
+          "500": {
+            "description": "Internal error occurred",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AbstractThrowableProblem"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Specified division has invalid format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AbstractThrowableProblem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "User doesn't have enough permissions"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "catalogs-rest-controller"
+        ],
+        "summary": "Creates a new category and add it to Merchant.",
+        "operationId": "addCategories",
+        "parameters": [
+          {
+            "name": "merchantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CatalogCreateModel"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Incorrect values were specified or not all required fields were set",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AbstractThrowableProblem"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Indicates that resource was successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CatalogModel"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User is not authenticated"
+          },
+          "500": {
+            "description": "Internal error occurred",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AbstractThrowableProblem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "User doesn't have enough permissions"
+          }
+        }
+      }
+    },
+    "/catalogs/default": {
+      "get": {
+        "tags": [
+          "catalogs-rest-controller"
+        ],
+        "summary": "Returns a full tree of default categories.",
+        "operationId": "findAllDefault",
+        "responses": {
+          "200": {
+            "description": "Returns a tree of default catalog",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CatalogModel"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User is not authenticated"
+          },
+          "500": {
+            "description": "Internal error occurred",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AbstractThrowableProblem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "User doesn't have enough permissions"
+          }
+        }
+      }
+    },
+    "/catalogs/{merchantId}/category/{categoryId}": {
+      "delete": {
+        "tags": [
+          "catalogs-rest-controller"
+        ],
+        "summary": "Delete Category for merchant.",
+        "operationId": "removeCategory",
+        "parameters": [
+          {
+            "name": "merchantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "categoryId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Incorrect values were specified or not all required fields were set",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AbstractThrowableProblem"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Indicates that existing resource was successfully deleted"
+          },
+          "401": {
+            "description": "User is not authenticated"
+          },
+          "404": {
+            "description": "Requested resource is not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AbstractThrowableProblem"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal error occurred",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AbstractThrowableProblem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "User doesn't have enough permissions"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CatalogCreateModel": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the category"
+          },
+          "parentId": {
+            "type": "string",
+            "description": "Allows to attach newly create category to the specified parent",
+            "nullable": true
+          },
+          "children": {
+            "type": "array",
+            "description": "Allows to create a set of nested categories in one request.Doesn't delete or update other categories.",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/CatalogCreateModel"
+            }
+          }
+        },
+        "description": "Represents Catalog Models parameters for create operation."
+      },
+      "AbstractThrowableProblem": {
+        "type": "object",
+        "properties": {
+          "cause": {
+            "$ref": "#/components/schemas/ThrowableProblem"
+          },
+          "stackTrace": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "classLoaderName": {
+                  "type": "string"
+                },
+                "moduleName": {
+                  "type": "string"
+                },
+                "moduleVersion": {
+                  "type": "string"
+                },
+                "methodName": {
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                },
+                "lineNumber": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "className": {
+                  "type": "string"
+                },
+                "nativeMethod": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "type": {
+            "type": "string",
+            "format": "uri"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/StatusType"
+          },
+          "detail": {
+            "type": "string"
+          },
+          "instance": {
+            "type": "string",
+            "format": "uri"
+          },
+          "parameters": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object"
+            }
+          },
+          "message": {
+            "type": "string"
+          },
+          "suppressed": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "cause": {
+                  "type": "object",
+                  "properties": {
+                    "stackTrace": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "classLoaderName": {
+                            "type": "string"
+                          },
+                          "moduleName": {
+                            "type": "string"
+                          },
+                          "moduleVersion": {
+                            "type": "string"
+                          },
+                          "methodName": {
+                            "type": "string"
+                          },
+                          "fileName": {
+                            "type": "string"
+                          },
+                          "lineNumber": {
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "className": {
+                            "type": "string"
+                          },
+                          "nativeMethod": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "localizedMessage": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "stackTrace": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "classLoaderName": {
+                        "type": "string"
+                      },
+                      "moduleName": {
+                        "type": "string"
+                      },
+                      "moduleVersion": {
+                        "type": "string"
+                      },
+                      "methodName": {
+                        "type": "string"
+                      },
+                      "fileName": {
+                        "type": "string"
+                      },
+                      "lineNumber": {
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "className": {
+                        "type": "string"
+                      },
+                      "nativeMethod": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localizedMessage": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "localizedMessage": {
+            "type": "string"
+          }
+        }
+      },
+      "StatusType": {
+        "type": "object",
+        "properties": {
+          "reasonPhrase": {
+            "type": "string"
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ThrowableProblem": {
+        "type": "object",
+        "properties": {
+          "cause": {
+            "$ref": "#/components/schemas/ThrowableProblem"
+          },
+          "stackTrace": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "classLoaderName": {
+                  "type": "string"
+                },
+                "moduleName": {
+                  "type": "string"
+                },
+                "moduleVersion": {
+                  "type": "string"
+                },
+                "methodName": {
+                  "type": "string"
+                },
+                "fileName": {
+                  "type": "string"
+                },
+                "lineNumber": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "className": {
+                  "type": "string"
+                },
+                "nativeMethod": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/StatusType"
+          },
+          "title": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "string"
+          },
+          "instance": {
+            "type": "string",
+            "format": "uri"
+          },
+          "type": {
+            "type": "string",
+            "format": "uri"
+          },
+          "parameters": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object"
+            }
+          },
+          "suppressed": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "cause": {
+                  "type": "object",
+                  "properties": {
+                    "stackTrace": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "classLoaderName": {
+                            "type": "string"
+                          },
+                          "moduleName": {
+                            "type": "string"
+                          },
+                          "moduleVersion": {
+                            "type": "string"
+                          },
+                          "methodName": {
+                            "type": "string"
+                          },
+                          "fileName": {
+                            "type": "string"
+                          },
+                          "lineNumber": {
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "className": {
+                            "type": "string"
+                          },
+                          "nativeMethod": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "localizedMessage": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "stackTrace": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "classLoaderName": {
+                        "type": "string"
+                      },
+                      "moduleName": {
+                        "type": "string"
+                      },
+                      "moduleVersion": {
+                        "type": "string"
+                      },
+                      "methodName": {
+                        "type": "string"
+                      },
+                      "fileName": {
+                        "type": "string"
+                      },
+                      "lineNumber": {
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "className": {
+                        "type": "string"
+                      },
+                      "nativeMethod": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localizedMessage": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "localizedMessage": {
+            "type": "string"
+          }
+        }
+      },
+      "CatalogModel": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier of the catalog item",
+            "readOnly": true
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the catalog item",
+            "readOnly": true
+          },
+          "parentId": {
+            "type": "string",
+            "description": "Specifies the parent item in catalog hierarchy.",
+            "nullable": true,
+            "readOnly": true
+          },
+          "level": {
+            "type": "integer",
+            "description": "Describes level of catalog for easier navigation",
+            "format": "int64",
+            "readOnly": true,
+            "default": 0
+          },
+          "children": {
+            "type": "array",
+            "description": "List of nested items",
+            "nullable": true,
+            "readOnly": true,
+            "items": {
+              "$ref": "#/components/schemas/CatalogModel"
+            }
+          }
+        },
+        "description": "Represents persisted Catalog Item."
+      },
+      "ResourcePagedResponseCatalogModel": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "description": "The page supplied by the client or the server default.",
+            "format": "int32",
+            "readOnly": true
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Shows how many items the current page can contains.",
+            "format": "int64",
+            "readOnly": true
+          },
+          "count": {
+            "type": "integer",
+            "description": "The actual number of results returned in results.",
+            "format": "int64",
+            "readOnly": true
+          },
+          "total": {
+            "type": "integer",
+            "description": "The total number of results matching the query.",
+            "format": "int64",
+            "readOnly": true
+          },
+          "results": {
+            "type": "array",
+            "description": "List of results",
+            "readOnly": true,
+            "items": {
+              "$ref": "#/components/schemas/CatalogModel"
+            }
+          },
+          "prevPage": {
+            "type": "string",
+            "description": "Generated link to the previous page. If the current page is the first - contains 'null'",
+            "nullable": true,
+            "readOnly": true
+          },
+          "nextPage": {
+            "type": "string",
+            "description": "Generated link to the next page. If the current page is the last one - contains 'null'",
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "description": "For query responses of requests supporting paging via limit and page."
+      }
+    }
+  }
+}

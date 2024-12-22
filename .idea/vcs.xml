@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/aqa-api-client" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/aqa-utils" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/aqa-wdio-taf" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/rakali-aqa-api-client" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/rakali-aqa-cucumber-slicer" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/rakali-aqa-fe" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/rakali-aqa-user-provider" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/rakali-aqa-utils" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/rakali-aqa-wdio-taf" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/rakali-merchant-hierarchy-service" vcs="Git" />
+  </component>
+</project>

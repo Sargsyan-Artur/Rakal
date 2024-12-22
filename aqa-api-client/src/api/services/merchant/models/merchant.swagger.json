@@ -1,0 +1,718 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Merchant service API",
+    "description": "This server created using springdocs - a library for OpenAPI 3 with spring boot.",
+    "version": "0.0.1640355359"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "tags": [
+    {
+      "name": "merchant",
+      "description": "the merchant API with documentation annotations"
+    }
+  ],
+  "paths": {
+    "/api/v1/admin/merchants/{merchantId}": {
+      "get": {
+        "tags": [
+          "merchant-admin-controller"
+        ],
+        "summary": "Get merchant by id",
+        "operationId": "getMerchant_1",
+        "parameters": [
+          {
+            "name": "merchantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "flag used to get merchants with children or not.",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found the merchant",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MerchantDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Merchant with id %s not found!"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "merchant-admin-controller"
+        ],
+        "summary": "Update merchant",
+        "operationId": "updateMerchant",
+        "parameters": [
+          {
+            "name": "merchantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MerchantAdminDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Updated"
+          },
+          "404": {
+            "description": "Merchant with id %s not found!"
+          },
+          "400": {
+            "description": "Archived merchant can't be updated!"
+          }
+        }
+      }
+    },
+    "/api/v1/admin/merchants": {
+      "get": {
+        "tags": [
+          "merchant-admin-controller"
+        ],
+        "summary": "Get all merchants(sorting and paging)",
+        "operationId": "getMerchants_1",
+        "parameters": [
+          {
+            "name": "isArchived",
+            "in": "query",
+            "description": "flag used to get archived merchants or not, if absent returned all.",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Zero-based page index (0..N)",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "The size of the page to be returned",
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageMerchantAdminDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "merchant-admin-controller"
+        ],
+        "summary": "Create merchant",
+        "operationId": "createMerchant",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MerchantAdminDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MerchantDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Constraint Violation!"
+          }
+        }
+      }
+    },
+    "/api/v1/merchants": {
+      "get": {
+        "tags": [
+          "merchant"
+        ],
+        "summary": "Get all merchants(sorting and paging)",
+        "operationId": "getMerchants",
+        "parameters": [
+          {
+            "name": "isArchived",
+            "in": "query",
+            "description": "flag used to get archived merchants or not, if absent returned all.",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Zero-based page index (0..N)",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "The size of the page to be returned",
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageMerchantDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/merchants/{merchantId}": {
+      "get": {
+        "tags": [
+          "merchant"
+        ],
+        "summary": "Get merchant by id",
+        "operationId": "getMerchant",
+        "parameters": [
+          {
+            "name": "merchantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "includeChildren",
+            "in": "query",
+            "description": "flag used to get merchants with children or not.",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found the merchant",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MerchantDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Merchant with id %s not found!"
+          }
+        }
+      }
+    },
+    "/api/v1/merchants/{merchantId}/children": {
+      "get": {
+        "tags": [
+          "merchant"
+        ],
+        "summary": "Get children for merchant by merchant id(sorting and paging)",
+        "operationId": "getChildren",
+        "parameters": [
+          {
+            "name": "merchantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "include-children",
+            "in": "query",
+            "description": "flag used to get merchants with children or not.",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Zero-based page index (0..N)",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "The size of the page to be returned",
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageMerchantDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/admin/merchants/{merchantId}/children": {
+      "get": {
+        "tags": [
+          "merchant-admin-controller"
+        ],
+        "summary": "Get children for merchant by merchant id(sorting and paging)",
+        "operationId": "getChildren_1",
+        "parameters": [
+          {
+            "name": "merchantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "include-children",
+            "in": "query",
+            "description": "flag used to get merchants with children or not.",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Zero-based page index (0..N)",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "The size of the page to be returned",
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageMerchantAdminDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "MerchantAdminDTO": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "merchantId": {
+            "maximum": 99999999,
+            "minimum": 10000000,
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "maxLength": 150,
+            "minLength": 0,
+            "type": "string"
+          },
+          "phoneNumber": {
+            "maximum": 9999999999,
+            "minimum": 1000000000,
+            "type": "integer",
+            "format": "int64"
+          },
+          "email": {
+            "maxLength": 250,
+            "minLength": 0,
+            "type": "string"
+          },
+          "address": {
+            "maxLength": 250,
+            "minLength": 0,
+            "type": "string"
+          },
+          "city": {
+            "maxLength": 150,
+            "minLength": 0,
+            "type": "string"
+          },
+          "zipCode": {
+            "maximum": 99999,
+            "minimum": 10000,
+            "type": "integer",
+            "format": "int32"
+          },
+          "isArchived": {
+            "type": "boolean"
+          },
+          "children": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MerchantDTO"
+            }
+          },
+          "state": {
+            "$ref": "#/components/schemas/StateDTO"
+          }
+        }
+      },
+      "MerchantDTO": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "merchantId": {
+            "maximum": 99999999,
+            "minimum": 10000000,
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "maxLength": 150,
+            "minLength": 0,
+            "type": "string"
+          },
+          "phoneNumber": {
+            "maximum": 9999999999,
+            "minimum": 1000000000,
+            "type": "integer",
+            "format": "int64"
+          },
+          "email": {
+            "maxLength": 250,
+            "minLength": 0,
+            "type": "string"
+          },
+          "address": {
+            "maxLength": 250,
+            "minLength": 0,
+            "type": "string"
+          },
+          "city": {
+            "maxLength": 150,
+            "minLength": 0,
+            "type": "string"
+          },
+          "zipCode": {
+            "maximum": 99999,
+            "minimum": 10000,
+            "type": "integer",
+            "format": "int32"
+          },
+          "isArchived": {
+            "type": "boolean"
+          },
+          "children": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MerchantDTO"
+            }
+          },
+          "state": {
+            "type": "string"
+          }
+        }
+      },
+      "StateDTO": {
+        "type": "object",
+        "properties": {
+          "abbreviation": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "PageMerchantDTO": {
+        "type": "object",
+        "properties": {
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MerchantDTO"
+            }
+          },
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sort": {
+            "$ref": "#/components/schemas/Sort"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          },
+          "numberOfElements": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageable": {
+            "$ref": "#/components/schemas/PageableObject"
+          },
+          "empty": {
+            "type": "boolean"
+          }
+        }
+      },
+      "PageableObject": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "sort": {
+            "$ref": "#/components/schemas/Sort"
+          },
+          "paged": {
+            "type": "boolean"
+          },
+          "unpaged": {
+            "type": "boolean"
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Sort": {
+        "type": "object",
+        "properties": {
+          "empty": {
+            "type": "boolean"
+          },
+          "unsorted": {
+            "type": "boolean"
+          },
+          "sorted": {
+            "type": "boolean"
+          }
+        }
+      },
+      "PageMerchantAdminDTO": {
+        "type": "object",
+        "properties": {
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MerchantAdminDTO"
+            }
+          },
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sort": {
+            "$ref": "#/components/schemas/Sort"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          },
+          "numberOfElements": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageable": {
+            "$ref": "#/components/schemas/PageableObject"
+          },
+          "empty": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}

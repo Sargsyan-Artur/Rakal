@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "ES2019",
+    "moduleResolution": "node",
+    "lib": [
+      "ES2019",
+      "dom"
+    ],
+    "outDir": "./build",
+    "declarationMap": true,
+    "declaration": true,
+    "allowJs": true,
+    "checkJs": true,
+    "strict": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitOverride": true,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "newLine": "lf",
+    "skipLibCheck": true,
+    "listFiles": true,
+    "listEmittedFiles": true,
+    "types": [
+      "node",
+      "@types/jest"
+    ]
+  },
+  "exclude": [
+    "build",
+    "artifacts",
+    "__mocks__",
+    "tests",
+    "node_modules"
+  ]
+}

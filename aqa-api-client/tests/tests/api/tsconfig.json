@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "ES2019",
+    "moduleResolution": "node",
+    "lib": ["ES2019", "dom"],
+    "baseUrl": "./src",
+    "allowJs": false,
+    "strict": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitOverride": true,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "newLine": "lf",
+    "skipLibCheck": true,
+    "paths": {
+      "@configs/*": ["./configs/*"],
+      "@fixtures/*": ["./fixtures/*"],
+      "@data/*": ["./data/*"],
+      "@helpers/*": ["./helpers/*"]
+    }
+  }
+}

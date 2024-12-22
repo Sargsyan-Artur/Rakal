@@ -1,0 +1,4 @@
+__mocks__
+tests
+.husky
+.lint-configs

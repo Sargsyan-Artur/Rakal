@@ -1,0 +1,1038 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Job service API",
+    "description": "This is a job service server created using springdocs - a library for OpenAPI 3 with spring boot."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080/job",
+      "description": "Generated server url"
+    }
+  ],
+  "paths": {
+    "/api/v1/types": {
+      "get": {
+        "tags": [
+          "job-type-controller"
+        ],
+        "operationId": "getAll",
+        "parameters": [
+          {
+            "name": "mid",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Zero-based page index (0..N)",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "The size of the page to be returned",
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageJobTypeDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "job-type-controller"
+        ],
+        "operationId": "update",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobTypeDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobTypeDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "job-type-controller"
+        ],
+        "operationId": "createType",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobTypeDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobTypeDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/sub-types": {
+      "put": {
+        "tags": [
+          "job-sub-type-controller"
+        ],
+        "operationId": "update_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobSubTypeDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobSubTypeDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/merchant/workflow": {
+      "get": {
+        "tags": [
+          "merchant-workflow-controller"
+        ],
+        "operationId": "getAllMerchantWorkflowConfig",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MerchantWorkflowConfigDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "merchant-workflow-controller"
+        ],
+        "operationId": "updateMerchantWorkflowConfig",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MerchantWorkflowConfigDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MerchantWorkflowConfigDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "merchant-workflow-controller"
+        ],
+        "operationId": "createMerchantWorkflowConfig",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MerchantWorkflowConfigDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MerchantWorkflowConfigDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/merchant/workflow/{/id}": {
+      "put": {
+        "tags": [
+          "merchant-workflow-controller"
+        ],
+        "operationId": "updateStep",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkflowStepDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MerchantWorkflowConfigDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/location/workflow": {
+      "get": {
+        "tags": [
+          "location-workflow-controller"
+        ],
+        "operationId": "getAllLocationWorkflowConfig",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LocationWorkflowConfigDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "location-workflow-controller"
+        ],
+        "operationId": "updateLocationWorkflowConfig",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LocationWorkflowConfigDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/LocationWorkflowConfigDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "location-workflow-controller"
+        ],
+        "operationId": "createLocationWorkflowConfig",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LocationWorkflowConfigDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/LocationWorkflowConfigDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/business/workflow": {
+      "get": {
+        "tags": [
+          "business-workflow-controller"
+        ],
+        "operationId": "getAllBusinessWorkflowConfig",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BusinessWorkflowConfigDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "business-workflow-controller"
+        ],
+        "operationId": "updateBusinessWorkflowConfig",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BusinessWorkflowConfigDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BusinessWorkflowConfigDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "business-workflow-controller"
+        ],
+        "operationId": "createBusinessWorkflowConfig",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BusinessWorkflowConfigDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BusinessWorkflowConfigDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/types/{typeId}/sub-types/": {
+      "post": {
+        "tags": [
+          "job-type-controller"
+        ],
+        "operationId": "addSubType",
+        "parameters": [
+          {
+            "name": "typeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobSubTypeDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobTypeDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/merchant/workflow/{id}": {
+      "get": {
+        "tags": [
+          "merchant-workflow-controller"
+        ],
+        "operationId": "getMerchantWorkflowConfig",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MerchantWorkflowConfigDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "merchant-workflow-controller"
+        ],
+        "operationId": "delete_2",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/location/workflow/{id}": {
+      "get": {
+        "tags": [
+          "location-workflow-controller"
+        ],
+        "operationId": "getLocationWorkflowConfig",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/LocationWorkflowConfigDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "location-workflow-controller"
+        ],
+        "operationId": "deleteLocationWorkflowConfig",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/location/workflow/{id}/inherit-change": {
+      "get": {
+        "tags": [
+          "location-workflow-controller"
+        ],
+        "operationId": "changeInheritFromParentState",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/LocationWorkflowConfigDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/business/workflow/{id}": {
+      "get": {
+        "tags": [
+          "business-workflow-controller"
+        ],
+        "operationId": "getBusinessWorkflowConfig",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BusinessWorkflowConfigDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "business-workflow-controller"
+        ],
+        "operationId": "deleteBusinessWorkflowConfig",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/business/workflow/{id}/inherit-change": {
+      "get": {
+        "tags": [
+          "business-workflow-controller"
+        ],
+        "operationId": "changeInheritFromParentState_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BusinessWorkflowConfigDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/types/{id}": {
+      "delete": {
+        "tags": [
+          "job-type-controller"
+        ],
+        "operationId": "delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/sub-types/{subTypeId}": {
+      "delete": {
+        "tags": [
+          "job-sub-type-controller"
+        ],
+        "operationId": "delete_1",
+        "parameters": [
+          {
+            "name": "subTypeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "JobSubTypeDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "JobTypeDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "merchantId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "jobSubTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/JobSubTypeDTO"
+            }
+          }
+        }
+      },
+      "FieldDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fieldValue": {
+            "type": "string"
+          }
+        }
+      },
+      "MerchantWorkflowConfigDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "merchantId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "workflowSteps": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkflowStepDTO"
+            }
+          },
+          "types": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/JobTypeDTO"
+            }
+          }
+        }
+      },
+      "WorkflowStepDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "hide": {
+            "type": "boolean"
+          },
+          "orderValue": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderStatus": {
+            "type": "boolean"
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FieldDTO"
+            }
+          }
+        }
+      },
+      "LocationWorkflowConfigDTO": {
+        "type": "object",
+        "properties": {
+          "workflowId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "stepName": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "hide": {
+            "type": "boolean"
+          },
+          "orderValue": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderStatus": {
+            "type": "boolean"
+          },
+          "type": {
+            "type": "string"
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FieldDTO"
+            }
+          },
+          "locationId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "locationName": {
+            "type": "string"
+          },
+          "inheritFromParent": {
+            "type": "boolean"
+          }
+        }
+      },
+      "BusinessWorkflowConfigDTO": {
+        "type": "object",
+        "properties": {
+          "workflowId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "stepName": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "hide": {
+            "type": "boolean"
+          },
+          "orderValue": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderStatus": {
+            "type": "boolean"
+          },
+          "type": {
+            "type": "string"
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FieldDTO"
+            }
+          },
+          "businessUnitId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "businessUnitName": {
+            "type": "string"
+          },
+          "inheritFromParent": {
+            "type": "boolean"
+          },
+          "locationWorkflowConfigs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LocationWorkflowConfigDTO"
+            }
+          }
+        }
+      },
+      "PageJobTypeDTO": {
+        "type": "object",
+        "properties": {
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/JobTypeDTO"
+            }
+          },
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sort": {
+            "$ref": "#/components/schemas/Sort"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          },
+          "numberOfElements": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageable": {
+            "$ref": "#/components/schemas/PageableObject"
+          },
+          "empty": {
+            "type": "boolean"
+          }
+        }
+      },
+      "PageableObject": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "sort": {
+            "$ref": "#/components/schemas/Sort"
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "paged": {
+            "type": "boolean"
+          },
+          "unpaged": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Sort": {
+        "type": "object",
+        "properties": {
+          "empty": {
+            "type": "boolean"
+          },
+          "sorted": {
+            "type": "boolean"
+          },
+          "unsorted": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}

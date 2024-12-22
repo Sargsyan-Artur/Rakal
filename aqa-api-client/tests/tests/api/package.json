@@ -1,0 +1,46 @@
+{
+  "name": "rak-aqa-be-servicename",
+  "version": "0.0.1",
+  "description": "api autotests",
+  "private": true,
+  "scripts": {
+    "co:login": "aws codeartifact login --tool npm --repository aqa --domain rak --domain-owner 937446967827 --region us-east-1",
+    "lint": "prettier --write . && eslint .",
+    "prepare": "cd ../.. && husky install tests/api/.husky",
+    "pretest": "rimraf ./artifacts/allure/source",
+    "test": "jest --config ./src/configs/jest.conf.ts",
+    "allure:report": "allure generate ./artifacts/allure/source -c -o ./artifacts/allure/report"
+  },
+  "repository": {
+    "type": "git",
+    "url": "codecommit::us-east-1://rak-merchant-hierarchy-service"
+  },
+  "dependencies": {
+    "@rak-aqa/api-client": "^1.0.7",
+    "@rak-aqa/utils": "^0.1.4",
+    "@types/jest": "^27.0.3",
+    "@types/lodash": "^4.14.177",
+    "@types/uuid": "^8.3.3",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
+    "allure-commandline": "^2.13.8",
+    "eslint": "^8.3.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jest": "^25.2.4",
+    "husky": "^7.0.4",
+    "jest": "^27.3.1",
+    "jest-allure2-adapter": "^0.3.11",
+    "jest-junit": "^13.0.0",
+    "prettier": "^2.4.1",
+    "ts-jest": "^27.0.7",
+    "ts-node": "^10.4.0",
+    "tsconfig-paths": "^3.12.0",
+    "typescript": "^4.5.2"
+  },
+  "engines": {
+    "node": ">=14.0.0 < 16.0.0",
+    "npm": ">=6.14.0 < 7.0.0"
+  }
+}

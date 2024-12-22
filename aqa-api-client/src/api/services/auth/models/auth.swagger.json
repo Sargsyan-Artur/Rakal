@@ -1,0 +1,162 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Auth service API",
+    "description": "This server created using springdocs - a library for OpenAPI 3 with spring boot.",
+    "version": "0.0.1641852399"
+  },
+  "servers": [
+    {
+      "url": "http://dev2-api.gsky-mecp.projects.epam.com/auth-service",
+      "description": "Generated server url"
+    }
+  ],
+  "paths": {
+    "/api/v1/token/fat-token": {
+      "post": {
+        "tags": [
+          "auth-controller"
+        ],
+        "operationId": "getFatToken",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Session"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthInfoFatTokenResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/session/updating": {
+      "post": {
+        "tags": [
+          "auth-controller"
+        ],
+        "operationId": "refreshUserSessionsById",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserIdentifier"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/auth": {
+      "post": {
+        "tags": [
+          "auth-controller"
+        ],
+        "operationId": "auth",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserCredentials"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthInfoThinTokenResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Session": {
+        "required": [
+          "sessionId"
+        ],
+        "type": "object",
+        "properties": {
+          "sessionId": {
+            "type": "string"
+          }
+        }
+      },
+      "AuthInfoFatTokenResponse": {
+        "type": "object",
+        "properties": {
+          "fatToken": {
+            "type": "string"
+          },
+          "userInfo": {
+            "type": "string"
+          }
+        }
+      },
+      "UserIdentifier": {
+        "required": [
+          "userId"
+        ],
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string"
+          }
+        }
+      },
+      "UserCredentials": {
+        "required": [
+          "password",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "AuthInfoThinTokenResponse": {
+        "type": "object",
+        "properties": {
+          "thinToken": {
+            "type": "string"
+          },
+          "userInfo": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
